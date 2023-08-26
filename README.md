@@ -3,4 +3,4 @@ This is a project showing the build and configuration of a wordpress service hos
 
 ## Diagram
 Diagram taken from this link: https://docs.aws.amazon.com/whitepapers/latest/best-practices-wordpress/reference-architecture.html
-![Alt text](https://github.com/Mjkli/wordpressOnAWS/blob/main/diagram.png)
+![Alt text](https://github.com/Mjkli/wordpressOnAWS/blob/master/diagram.png)
