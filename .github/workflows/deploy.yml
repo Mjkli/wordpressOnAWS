@@ -1,0 +1,70 @@
+name: Test Infrastrucutre Build
+on:
+    push:
+        branches:
+            - 'master'
+jobs:
+    ami:
+        name: Build AMI Image
+        runs-on: ubuntu-latest
+        container: mjkli/packer-aws:latest
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: "us-west-1"
+        steps:
+          - name: Checkout the repo to the runner
+            uses: actions/checkout@v3
+
+          - name: packer init
+            run: packer init wp_image.pkr.hcl
+            working-directory: infrastructure/packer
+
+          - name: packer validate
+            run: packer validate .
+            working-directory: infrastructure/packer
+
+          - name: packer build
+            run: packer build wp_image.pkr.hcl
+            working-directory: infrastructure/packer
+
+
+
+    infra:
+        needs: ami
+        name: Deploy and destroy terraform
+        runs-on: ubuntu-latest
+        container: mjkli/terraform-aws:latest
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            AWS_DEFAULT_REGION: "us-west-1"
+        steps:
+            - name: Checkout the repo to the runner
+              uses: actions/checkout@v3
+
+            - name: Terraform init
+              run: terraform init
+              working-directory: infrastructure/tf
+
+            - name: Terraform validate
+              run: terraform validate
+              id: validate
+              working-directory: infrastructure/tf
+
+            - name: Terraform validate status
+              if: steps.validate.outcome == 'falure'
+              run: exit 1
+
+            - name: Terraform Plan
+              id: plan
+              run: terraform plan -input=false
+              working-directory: infrastructure/tf
+
+            - name: Terraform plan status
+              if: steps.plan.outcome == 'falure'
+              run: exit 1
+
+            - name: Terrafrom apply
+              run: terraform apply -auto-approve -input=false
+              working-directory: infrastructure/tf
