@@ -119,6 +119,6 @@ resource "aws_lb" "app-lb"{
     name = "wp-lb"
     internal = false
     load_balancer_type = "application"
-    security_groups = []
+    security_groups = [aws_security_group.allow_http.id]
     subnets = [aws_subnet.public-sub-1.id,aws_subnet.public-sub-2.id]
 }
