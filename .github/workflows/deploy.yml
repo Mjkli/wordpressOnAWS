@@ -1,5 +1,8 @@
 name: Test Infrastrucutre Build
-on: ["push"]
+on:
+    push:
+        branches:
+            - 'master'
 jobs:
     ami:
         name: Build AMI Image
@@ -64,11 +67,4 @@ jobs:
 
             - name: Terrafrom apply
               run: terraform apply -auto-approve -input=false
-              working-directory: infrastructure/tf
-
-            - name: Wait for infrastructure to apply
-              run: sleep 120
-
-            - name: Terraform Destroy
-              run: terraform destroy -auto-approve -input=false
               working-directory: infrastructure/tf
