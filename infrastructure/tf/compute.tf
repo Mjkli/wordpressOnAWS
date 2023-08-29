@@ -38,6 +38,8 @@ resource "aws_autoscaling_group" "wp-asg" {
         create_before_destroy = true
     }
 
+    force_delete = "true"
+
 }
 
 resource "aws_autoscaling_attachment" "asg-attach"{
