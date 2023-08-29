@@ -14,7 +14,7 @@ jobs:
             uses: actions/checkout@v3
 
           - name: packer init
-            run: packer init api_image.pkr.hcl
+            run: packer init wp_image.pkr.hcl
             working-directory: infrastructure/packer
 
           - name: packer validate
@@ -22,12 +22,13 @@ jobs:
             working-directory: infrastructure/packer
 
           - name: packer build
-            run: packer build api_image.pkr.hcl
+            run: packer build wp_image.pkr.hcl
             working-directory: infrastructure/packer
 
 
 
     infra:
+        needs: ami
         name: Deploy and destroy terraform
         runs-on: ubuntu-latest
         container: mjkli/terraform-aws:latest
@@ -41,12 +42,12 @@ jobs:
 
             - name: Terraform init
               run: terraform init
-              working-directory: infrastrucure/tf
+              working-directory: infrastructure/tf
 
             - name: Terraform validate
               run: terraform validate
               id: validate
-              working-directory: infrastrucure/tf
+              working-directory: infrastructure/tf
 
             - name: Terraform validate status
               if: steps.validate.outcome == 'falure'
@@ -55,7 +56,7 @@ jobs:
             - name: Terraform Plan
               id: plan
               run: terraform plan -input=false
-              working-directory: infrastrucure/tf
+              working-directory: infrastructure/tf
 
             - name: Terraform plan status
               if: steps.plan.outcome == 'falure'
@@ -63,8 +64,8 @@ jobs:
 
             - name: Terrafrom apply
               run: terraform apply -auto-approve -input=false
-              working-directory: infrastrucure/tf
+              working-directory: infrastructure/tf
 
             - name: Terraform Destroy
               run: terraform destroy -auto-approve -input=false
-              working-directory: infrastrucure/tf
+              working-directory: infrastructure/tf
