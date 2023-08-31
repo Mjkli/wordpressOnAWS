@@ -51,6 +51,8 @@ jobs:
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             AWS_DEFAULT_REGION: "us-west-1"
+        outputs:
+          cloudfront_dns: ${{ steps.cloudfront.outputs.url}}
         steps:
             - name: Checkout the repo to the runner
               uses: actions/checkout@v3
@@ -85,12 +87,15 @@ jobs:
               run: sleep 120
 
             - name: Get cloudfront URL
-              run: terraform output cloudfront_dns
-              id: output
+              id: cloudfront
               working-directory: infrastructure/tf
+              run: |
+                dns = $(terraform output cloudfront_dns)
+                echo "dns=$dns" >> $GITHUB_OUTPUT
+
 
             - name: Check if cloudfront url is working
-              run: curl ${{ steps.output.outcome }}
+              run: curl ${{steps.cloudfront.outputs.dns}}
 
             - name: Terraform Destroy
               run: terraform destroy -auto-approve -input=false
