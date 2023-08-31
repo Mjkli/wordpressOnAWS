@@ -11,6 +11,14 @@ resource "aws_security_group" "allow_http"{
         cidr_blocks = ["0.0.0.0/0"]
     }
 
+    ingress {
+        description = "TCP from public"
+        from_port = 443
+        to_port = 443
+        protocol = "TCP"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
     egress {
         from_port = 0
         to_port = 0
@@ -33,6 +41,14 @@ resource "aws_security_group" "allow_lb" {
         description = "HTTP from alb"
         from_port = 80
         to_port = 80
+        protocol = "TCP"
+        cidr_blocks = ["${aws_vpc.wp-vpc.cidr_block}"]
+    }
+
+    ingress {
+        description = "HTTPs from alb"
+        from_port = 443
+        to_port = 443
         protocol = "TCP"
         cidr_blocks = ["${aws_vpc.wp-vpc.cidr_block}"]
     }

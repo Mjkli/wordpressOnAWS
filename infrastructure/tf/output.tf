@@ -1,3 +1,3 @@
-output "lb_dns" {
-    value = aws_lb.app-lb.dns_name
+output "cloudfront_dns" {
+    value = aws_cloudfront_distribution.cf_dist.domain_name
 }
