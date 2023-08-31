@@ -15,6 +15,7 @@ jobs:
                   - 'infrastructure/packer/**'
     ami:
         name: Build AMI Image
+        needs: changes
         if: (needs.changes.outputs.image == 'true')
         runs-on: ubuntu-latest
         container: mjkli/packer-aws:latest
@@ -42,6 +43,7 @@ jobs:
 
     infra:
         needs: ami
+        if: ${{ always() }}
         name: Deploy and destroy terraform
         runs-on: ubuntu-latest
         container: mjkli/terraform-aws:latest
