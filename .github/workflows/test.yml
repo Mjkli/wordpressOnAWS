@@ -84,6 +84,14 @@ jobs:
             - name: Wait for infrastructure to apply
               run: sleep 120
 
+            - name: Get cloudfront URL
+              run: terraform output cloudfront_dns
+              id: output
+              working-directory: infrastructure/tf
+
+            - name: Check if cloudfront url is working
+              run: curl ${{ steps.output.outcome }}
+
             - name: Terraform Destroy
               run: terraform destroy -auto-approve -input=false
               working-directory: infrastructure/tf
