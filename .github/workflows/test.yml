@@ -94,8 +94,13 @@ jobs:
                 echo "$dns"
 
 
-            # - name: Check if cloudfront url is working
-            #   run: curl ${{steps.cloudfront.outputs.dns}}
+            - name: Check if cloudfront url is working
+              id: cloud_check
+              run: curl ${{steps.cloudfront.outputs.dns}}
+
+            - name: cloudfront_status
+              if: steps.cloud_check.outcome == 'success'
+              run: exit 1
 
             - name: Terraform Destroy
               run: terraform destroy -auto-approve -input=false
