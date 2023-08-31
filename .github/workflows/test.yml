@@ -91,7 +91,7 @@ jobs:
               working-directory: infrastructure/tf
               run: |
                 eval dns=$(terraform output cloudfront_dns)
-                echo "$dns"
+                echo "dns=$dns" >> $GITHUB_OUTPUT
 
 
             - name: Check if cloudfront url is working
