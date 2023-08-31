@@ -67,7 +67,7 @@ jobs:
               working-directory: infrastructure/tf
 
             - name: Terraform validate status
-              if: steps.validate.outcome == 'falure'
+              if: steps.validate.outcome == 'failure'
               run: exit 1
 
             - name: Terraform Plan
@@ -76,7 +76,7 @@ jobs:
               working-directory: infrastructure/tf
 
             - name: Terraform plan status
-              if: steps.plan.outcome == 'falure'
+              if: steps.plan.outcome == 'failure'
               run: exit 1
 
             - name: Terrafrom apply
@@ -96,10 +96,10 @@ jobs:
 
             - name: Check if cloudfront url is working
               id: cloud_check
-              run: curl ${{steps.cloudfront.outputs.dns}}
+              run: curl https://${{steps.cloudfront.outputs.dns}}
 
             - name: cloudfront_status
-              if: steps.cloud_check.outcome == 'success'
+              if: steps.cloud_check.outcome == 'failure'
               run: exit 1
 
             - name: Terraform Destroy
