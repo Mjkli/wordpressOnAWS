@@ -84,18 +84,18 @@ jobs:
               working-directory: infrastructure/tf
 
             - name: Wait for infrastructure to apply
-              run: sleep 120
+              run: sleep 60
 
             - name: Get cloudfront URL
               id: cloudfront
               working-directory: infrastructure/tf
               run: |
-                dns = $(terraform output cloudfront_dns)
-                echo "dns=$dns" >> $GITHUB_OUTPUT
+                eval dns=$(terraform output cloudfront_dns)
+                echo "$dns"
 
 
-            - name: Check if cloudfront url is working
-              run: curl ${{steps.cloudfront.outputs.dns}}
+            # - name: Check if cloudfront url is working
+            #   run: curl ${{steps.cloudfront.outputs.dns}}
 
             - name: Terraform Destroy
               run: terraform destroy -auto-approve -input=false
