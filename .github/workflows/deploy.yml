@@ -28,8 +28,6 @@ jobs:
             run: packer build wp_image.pkr.hcl
             working-directory: infrastructure/packer
 
-
-
     infra:
         needs: ami
         name: Deploy and destroy terraform
