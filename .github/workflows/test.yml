@@ -1,10 +1,13 @@
 name: Test Infrastrucutre Build
-on: ["push"]
+on:
+  push:
+      branches-ignore:
+        - master
 jobs:
     changes:
       runs-on: ubuntu-latest
       outputs:
-        image: ${{ steps.filter.outputs.image }}
+        image: ${{ steps.filters.outputs.image }}
       steps:
         - uses: actions/checkout@v3
         - uses: dorny/paths-filter@v2
