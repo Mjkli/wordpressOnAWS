@@ -6,7 +6,7 @@ resource "aws_db_subnet_group" "db_subnet_group" {
 
 resource "aws_db_instance" "wp-db" {
     allocated_storage = 5
-    db_name = "wp-db"
+    db_name = "wpdb"
     engine = "mysql"
     engine_version = "8.0.34"
     instance_class = "db.t4g.micro"
@@ -14,7 +14,7 @@ resource "aws_db_instance" "wp-db" {
     password = "replace_me"
     db_subnet_group_name = aws_db_subnet_group.db_subnet_group.name
     skip_final_snapshot = true
-    
+
 
     tags = {
         Name = "wp-db"
@@ -23,7 +23,7 @@ resource "aws_db_instance" "wp-db" {
 
 
 resource "aws_elasticache_subnet_group" "memcache_sub_group" {
-    name = "memcache_group"
+    name = "memcachegroup"
     subnet_ids = [aws_subnet.db-sub-1.id,aws_subnet.db-sub-2.id]
 }
 
