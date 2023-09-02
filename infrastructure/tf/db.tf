@@ -6,7 +6,7 @@ resource "aws_db_subnet_group" "db_subnet_group" {
 
 resource "aws_db_instance" "wp-db" {
     allocated_storage = 5
-    db_name = "wpdb"
+    db_name = "wp-db"
     engine = "mysql"
     engine_version = "8.0.34"
     instance_class = "db.t3.micro"
@@ -18,7 +18,7 @@ resource "aws_db_instance" "wp-db" {
 
 
 resource "aws_elasticache_subnet_group" "memcache_sub_group" {
-    name = "memcachegroup"
+    name = "memcache_group"
     subnet_ids = [aws_subnet.db-sub-1.id,aws_subnet.db-sub-2.id]
 }
 
