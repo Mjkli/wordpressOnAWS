@@ -45,7 +45,9 @@ build {
       "sleep 30",
       "sudo apt-get update",
       "sudo apt-get upgrade -y",
-      "sudo apt-get install apache2 mysql-client ghostscript libapache2-mod-php mysql-server php php-bcmath php-curl php-imagick php-intl php-json php-mbstring php-mysql php-xml php-zip -y"
+      "sudo apt-get install nfs-common apache2 mysql-client ghostscript libapache2-mod-php mysql-server php php-bcmath php-curl php-imagick php-intl php-json php-mbstring php-mysql php-xml php-zip -y",
+      "sudo mkdir /var/www/html/wordpress",
+      "sudo chmod 775 /var/www/html/wordpress"
       ]
   }
 }
