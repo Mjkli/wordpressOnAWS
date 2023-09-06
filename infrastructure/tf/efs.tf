@@ -1,6 +1,5 @@
 resource "aws_efs_file_system" "wp-fs" {
     creation_token = "wordpress-fs"
-    availability_zone_name = "us-west-1a"
 
     tags = {
         Name = "wordpress-fs"
