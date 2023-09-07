@@ -17,7 +17,7 @@ resource "local_file" "wp-startup" {
 }
 
 resource "aws_launch_template" "wp-template" {
-    depends_on = [ aws_efs_file_system.wp-fs, aws_efs_mount_target.db-1-tg, aws_efs_mount_target.db-2-tg ]
+    depends_on = [ aws_efs_file_system.wp-fs, aws_efs_mount_target.db-1-tg, aws_efs_mount_target.db-2-tg, local_file.wp-startup ]
     name_prefix = "wp-image"
     image_id = "${data.aws_ami.wp-image.id}"
     instance_type = "t2.micro"
@@ -29,7 +29,7 @@ resource "aws_launch_template" "wp-template" {
         security_groups = ["${aws_security_group.allow_lb.id}"]
     }
 
-    user_data = filebase64("${local_file.wp-startup}")
+    user_data = filebase64("${local_file.wp-startup.filename}")
 
 }
 
