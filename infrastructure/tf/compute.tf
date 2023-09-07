@@ -6,7 +6,7 @@ data "aws_ami" "wp-image" {
 
 resource "local_file" "wp-startup" {
     content = templatefile("${path.module}/wp-startup.sh.tpl",{efs_dns = "${aws_efs_file_system.wp-fs.dns_name}"})
-    filename = "${path.module}/wp-startup.sh"
+    filename = "wp-startup.sh"
 }
 
 resource "aws_launch_template" "wp-template" {
