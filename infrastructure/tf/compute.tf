@@ -4,15 +4,8 @@ data "aws_ami" "wp-image" {
     name_regex = "wp-image"
 }
 
-data "template_file" "app-startup" {
-    template = "${file("wp-startup.sh.tpl")}"
-    vars = {
-        efs_dns = "${aws_efs_file_system.wp-fs.dns_name}"
-    }
-}
-
 resource "local_file" "wp-startup" {
-    content = "${data.template_file.app-startup.rendered}"
+    content = templatefile("${path.module}/wp-startup.sh.tpl",{efs_dns = "${aws_efs_file_system.wp-fs.dns_name}"})
     filename = "${path.module}/wp-startup.sh"
 }
 
