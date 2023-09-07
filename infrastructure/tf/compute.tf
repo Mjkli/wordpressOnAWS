@@ -11,6 +11,11 @@ data "template_file" "app-startup" {
     }
 }
 
+resource "local_file" "wp-startup" {
+    content = "${data.template_file.app-startup.rendered}"
+    filename = "${path.module}/wp-startup.sh"
+}
+
 resource "aws_launch_template" "wp-template" {
     depends_on = [ aws_efs_file_system.wp-fs, aws_efs_mount_target.db-1-tg, aws_efs_mount_target.db-2-tg ]
     name_prefix = "wp-image"
@@ -24,7 +29,7 @@ resource "aws_launch_template" "wp-template" {
         security_groups = ["${aws_security_group.allow_lb.id}"]
     }
 
-    user_data = filebase64("${data.template_file.app-startup.rendered}")
+    user_data = filebase64("${local_file.wp-startup}")
 
 }
 
