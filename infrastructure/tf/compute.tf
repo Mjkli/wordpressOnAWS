@@ -22,7 +22,7 @@ resource "aws_launch_template" "wp-template" {
         security_groups = ["${aws_security_group.allow_lb.id}"]
     }
 
-    user_data = filebase64("${local_file.wp-startup.filename}")
+    user_data = "${local_file.wp-startup.content_base64sha256}"
 
 }
 
