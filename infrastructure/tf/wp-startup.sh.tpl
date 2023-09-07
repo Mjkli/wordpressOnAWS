@@ -4,7 +4,7 @@
 sleep 30
 
 # Mounting EFS target
-sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport $1:/ /var/www/html/wordpress
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${efs_dns}:/ /var/www/html/wordpress
 
 # Check if there is files in the efs directory if empty add default wordpress file else continue
 if [ -n "$(ls -A /var/www/html/wordpress 2>/dev/null)" ]

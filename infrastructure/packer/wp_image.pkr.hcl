@@ -36,11 +36,11 @@ build {
     "source.amazon-ebs.ubuntu"
   ]
 
-// Will adjust this when I start adding wp configuration
-//   provisioner "file" {
-//     source = "../../api/main.py"
-//     destination = "/home/ubuntu/main.py"
-//   }
+
+  provisioner "file" {
+    source = "../../wp-config/wordpress.conf"
+    destination = "/tmp/wordpress.conf"
+  }
 
   provisioner "shell"{
     inline = [
@@ -50,6 +50,7 @@ build {
       "sudo apt-get install nfs-common apache2 mysql-client ghostscript libapache2-mod-php mysql-server php php-bcmath php-curl php-imagick php-intl php-json php-mbstring php-mysql php-xml php-zip -y",
       "sudo mkdir /var/www/html/wordpress",
       "sudo chmod 775 /var/www/html/wordpress"
+      "sudo mv /tmp/wordpress.conf /etc/apache2/sites-available/wordpress.conf"
       ]
   }
 }

@@ -4,6 +4,13 @@ data "aws_ami" "wp-image" {
     name_regex = "wp-image"
 }
 
+data "template_file" "app-startup" {
+    template = "${file("wp-startup.sh.tpl")}"
+    vars = {
+        efs_dns = "${aws_efs_file_system.wp-fs.dns_name}"
+    }
+}
+
 resource "aws_launch_template" "wp-template" {
     depends_on = [ aws_efs_file_system.wp-fs, aws_efs_mount_target.db-1-tg, aws_efs_mount_target.db-2-tg ]
     name_prefix = "wp-image"
@@ -17,7 +24,7 @@ resource "aws_launch_template" "wp-template" {
         security_groups = ["${aws_security_group.allow_lb.id}"]
     }
 
-    user_data = filebase64("${path.module}/wp-startup.sh ${aws_efs_file_system.wp-fs.dns_name}")
+    user_data = "${data.template_file.app-startup.rendered}"
 
 }
 
