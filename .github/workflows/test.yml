@@ -91,13 +91,12 @@ jobs:
               id: cloudfront
               working-directory: infrastructure/tf
               run: |
-                eval dns=$(terraform output cloudfront_dns)
-                echo "dns=$dns" >> $GITHUB_OUTPUT
-
+                eval cf_dns=$(terraform output cloudfront_dns)
+                echo "cf_dns=$cf_dns" >> $GITHUB_OUTPUT
 
             - name: Check if cloudfront url is working
               id: cloud_check
-              run: curl https://${{steps.cloudfront.outputs.dns}}
+              run: curl https://${{steps.cloudfront.outputs.cf_dns}}
 
             - name: cloudfront_status
               if: steps.cloud_check.outcome == 'failure'

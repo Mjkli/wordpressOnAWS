@@ -18,12 +18,14 @@ source "amazon-ebs" "ubuntu" {
   region        = "us-west-1"
   source_ami_filter {
     filters = {
-      name                = "wp-image *"
+      #name                = "wp-image *"
+      name                = "ubuntu-pro-server*20.04-amd64*"
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
     most_recent = true
-    owners      = ["181066809772"]
+    #owners      = ["181066809772"]
+    owners = ["099720109477"] # Ubuntu
   }
   ssh_username = "ubuntu"
 }
