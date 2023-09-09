@@ -18,12 +18,14 @@ source "amazon-ebs" "ubuntu" {
   region        = "us-west-1"
   source_ami_filter {
     filters = {
-      name                = "wp-image *"
+      #name                = "wp-image *"
+      name                = "ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"
       root-device-type    = "ebs"
       virtualization-type = "hvm"
     }
     most_recent = true
-    owners      = ["181066809772"]
+    #owners      = ["181066809772"]
+    owners = ["099720109477"] # Ubuntu
   }
   ssh_username = "ubuntu"
 }
@@ -34,18 +36,21 @@ build {
     "source.amazon-ebs.ubuntu"
   ]
 
-// Will adjust this when I start adding wp configuration
-//   provisioner "file" {
-//     source = "../../api/main.py"
-//     destination = "/home/ubuntu/main.py"
-//   }
+
+  provisioner "file" {
+    source = "../../wp-config/wordpress.conf"
+    destination = "/tmp/wordpress.conf"
+  }
 
   provisioner "shell"{
     inline = [
       "sleep 30",
       "sudo apt-get update",
       "sudo apt-get upgrade -y",
-      "sudo apt-get install apache2 mysql-client ghostscript libapache2-mod-php mysql-server php php-bcmath php-curl php-imagick php-intl php-json php-mbstring php-mysql php-xml php-zip -y"
+      "sudo apt-get install nfs-common apache2 mysql-client ghostscript libapache2-mod-php mysql-server php php-bcmath php-curl php-imagick php-intl php-json php-mbstring php-mysql php-xml php-zip -y",
+      "sudo mkdir /var/www/html/wordpress",
+      "sudo chmod 775 /var/www/html/wordpress",
+      "sudo mv /tmp/wordpress.conf /etc/apache2/sites-available/wordpress.conf"
       ]
   }
 }
