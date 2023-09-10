@@ -11,7 +11,8 @@ if [ -n "$(ls -A /var/www/html/wordpress 2>/dev/null)" ]
 then
   echo "config files are here"
 else
-  curl https://wordpress.org/latest.tar.gz | sudo -u www-data tar zx -C /var/www/html/wordpress
+  sudo curl -o /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz
+  sudo tar -xf  /tmp/wordpress.tar.gz -C /var/www/html/wordpress
 fi
 
 sudo a2ensite wordpress
