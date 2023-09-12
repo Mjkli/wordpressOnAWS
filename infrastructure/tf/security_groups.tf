@@ -53,6 +53,14 @@ resource "aws_security_group" "allow_lb" {
         cidr_blocks = ["${aws_vpc.wp-vpc.cidr_block}"]
     }
 
+    ingress {
+        description = "SSH from home"
+        from_port = 22
+        to_port = 22
+        protocol = "TCP"
+        cidr_blocks = ["172.250.227.139/32"]
+    }
+
     egress {
         from_port = 0
         to_port = 0
