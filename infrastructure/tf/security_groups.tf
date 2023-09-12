@@ -66,3 +66,22 @@ resource "aws_security_group" "allow_lb" {
     }
 
 }
+
+resource "aws_security_group" "allow_mysql" {
+    name = "allow_mysql_from_vpc"
+    description = "allows sql access from only the vpc"
+    vpc_id = aws_vpc.wp-vpc.id
+
+    ingress {
+        description = "mysql from vpc"
+        from_port = 3306
+        to_port = 3306
+        protocol = "TCP"
+        cidr_blocks = ["${aws_vpc.wp-vpc.cidr_block}"]
+    }
+
+    tags = {
+        Name = "allow_mysql"
+        project = "wp_on_AWS"
+    }
+}
