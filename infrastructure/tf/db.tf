@@ -11,17 +11,15 @@ resource "aws_db_instance" "wp-db" {
     engine_version = "8.0.34"
     instance_class = "db.t4g.micro"
     username = "db_admin"
-    password = "replace_me"
+    password = var.rds_pass
     db_subnet_group_name = aws_db_subnet_group.db_subnet_group.name
     skip_final_snapshot = true
-    
-
+    vpc_security_group_ids = [ aws_security_group.allow_mysql.id ]
 
     tags = {
         Name = "wp-db"
     }
 }
-
 
 resource "aws_elasticache_subnet_group" "memcache_sub_group" {
     name = "memcachegroup"

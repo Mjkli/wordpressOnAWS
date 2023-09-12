@@ -18,7 +18,8 @@ jobs:
                   - 'infrastructure/packer/**'
     ami:
         name: Build AMI Image
-        #needs: changes
+        needs: changes
+        if: (needs.changes.outputs.image == 'true')
         runs-on: ubuntu-latest
         container: mjkli/packer-aws:latest
         env:
@@ -59,9 +60,7 @@ jobs:
 
             - name: Input rds password
               working-directory: infrastructure/tf
-              run: |
-                  sed -i "s/replace_me/${{ secrets.rds_password }}/g" db.tf && \
-                  sed -i "s/replace_me/${{ secrets.rds_password }}/g" wp-startup.sh.tpl
+              run: sed -i "s/replace_me/${{ secrets.rds_password }}/g" wp-startup.sh.tpl
 
             - name: Terraform init
               run: terraform init
@@ -78,7 +77,7 @@ jobs:
 
             - name: Terraform Plan
               id: plan
-              run: terraform plan -input=false
+              run: terraform plan -input=false -var="rds_pass=${{ secrets.rds_password }}"
               working-directory: infrastructure/tf
 
             - name: Terraform plan status
@@ -86,7 +85,7 @@ jobs:
               run: exit 1
 
             - name: Terrafrom apply
-              run: terraform apply -auto-approve -input=false
+              run: terraform apply -var="rds_pass=${{ secrets.rds_password }}" -auto-approve -input=false
               working-directory: infrastructure/tf
 
             - name: Wait for infrastructure to apply
