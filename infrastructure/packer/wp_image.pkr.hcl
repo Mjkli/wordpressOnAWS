@@ -49,7 +49,8 @@ build {
       "sudo apt-get install nfs-common apache2 mysql-client ghostscript libapache2-mod-php mysql-server php php-bcmath php-curl php-imagick php-intl php-json php-mbstring php-mysql php-xml php-zip -y",
       "sudo mkdir /var/www/html/wordpress",
       "sudo chmod 775 /var/www/html/wordpress",
-      "sudo mv /tmp/wordpress.conf /etc/apache2/sites-available/wordpress.conf"
+      "sudo mv /tmp/wp-config/wordpress.conf /etc/apache2/sites-available/wordpress.conf",
+      "sudo mv /tmp/wp-config/wp-config.php /var/www/html"
       ]
   }
 }

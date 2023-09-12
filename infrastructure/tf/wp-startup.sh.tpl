@@ -18,7 +18,7 @@ else
   sudo sed -i "s/username_here/${db_user}/g" /tmp/wp-config.php
   sudo sed -i "s/password_here/replace_me/g" /tmp/wp-config.php
   sudo sed -i "s/localhost/${rds_server}/g" /tmp/wp-config.php
-  sudo cp /tmp/wp-config.php /var/www/html/wordpress/wordpress
+  sudo cp /var/www/html/wp-config.php /var/www/html/wordpress/wordpress
 fi
 
 sudo a2ensite wordpress

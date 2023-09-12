@@ -18,8 +18,7 @@ jobs:
                   - 'infrastructure/packer/**'
     ami:
         name: Build AMI Image
-        needs: changes
-        if: (needs.changes.outputs.image == 'true')
+        #needs: changes
         runs-on: ubuntu-latest
         container: mjkli/packer-aws:latest
         env:
