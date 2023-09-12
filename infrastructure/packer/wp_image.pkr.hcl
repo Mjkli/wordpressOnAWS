@@ -36,10 +36,9 @@ build {
     "source.amazon-ebs.ubuntu"
   ]
 
-
   provisioner "file" {
-    source = "../../wp-config/wordpress.conf"
-    destination = "/tmp/wordpress.conf"
+    source = "../../wp-config"
+    destination = "/tmp"
   }
 
   provisioner "shell"{

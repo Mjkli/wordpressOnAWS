@@ -4,13 +4,9 @@ data "aws_ami" "wp-image" {
     name_regex = "wp-image"
 }
 
-resource "local_file" "wp-startup" {
-    content = templatefile("${path.module}/wp-startup.sh.tpl", {efs_dns = "${aws_efs_file_system.wp-fs.dns_name}"})
-    filename = "wp-startup.sh"
-}
 
 resource "aws_launch_template" "wp-template" {
-    depends_on = [ aws_efs_file_system.wp-fs, aws_efs_mount_target.db-1-tg, aws_efs_mount_target.db-2-tg, local_file.wp-startup ]
+    depends_on = [ aws_efs_file_system.wp-fs, aws_db_instance.wp-db ]
     name_prefix = "wp-image"
     image_id = "${data.aws_ami.wp-image.id}"
     instance_type = "t2.micro"
@@ -26,7 +22,10 @@ resource "aws_launch_template" "wp-template" {
                     templatefile(
                         "${path.module}/wp-startup.sh.tpl",
                         {
-                            efs_dns = aws_efs_file_system.wp-fs.dns_name
+                            efs_dns = aws_efs_file_system.wp-fs.dns_name,
+                            rds_server = aws_db_instance.wp-db.address,
+                            db_name = aws_db_instance.wp-db.db_name,
+                            db_user = aws_db_instance.wp-db.username
                         }
                     )
     )

@@ -4,6 +4,7 @@
 sleep 30
 
 # Mounting EFS target
+sudo mkdir /var/www/html/wordpress
 sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport ${efs_dns}:/ /var/www/html/wordpress
 
 # Check if there is files in the efs directory if empty add default wordpress file else continue
@@ -13,6 +14,11 @@ then
 else
   sudo curl -o /tmp/wordpress.tar.gz https://wordpress.org/latest.tar.gz
   sudo tar -xf  /tmp/wordpress.tar.gz -C /var/www/html/wordpress
+  sudo sed -i "s/database_name_here/${db_name}/g" /tmp/wp-config.php
+  sudo sed -i "s/username_here/${db_user}/g" /tmp/wp-config.php
+  sudo sed -i "s/password_here/replace_me/g" /tmp/wp-config.php
+  sudo sed -i "s/localhost/${rds_server}/g" /tmp/wp-config.php
+  sudo cp /tmp/wp-config.php /var/www/html/wordpress/wordpress
 fi
 
 sudo a2ensite wordpress
