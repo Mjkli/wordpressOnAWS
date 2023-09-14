@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "wp-cert" {
-    domain_name = aws_route53_record.wp.fqdn
+    domain_name = "wp.mjkli.com"
     validation_method = "DNS"
 
     lifecycle {
@@ -8,8 +8,8 @@ resource "aws_acm_certificate" "wp-cert" {
 
 }
 
-# This associates the SSL cert with the ALB
-resource "aws_lb_listener_certificate" "wp-cert-attach" {
-    listener_arn = aws_lb_listener.lb_listener.arn
+resource "aws_acm_certificate_validation" "wp-cert-val" {
     certificate_arn = aws_acm_certificate.wp-cert.arn
+    validation_record_fqdns = [ for record in aws_route53_record.wp : record.fqdn]
+
 }
