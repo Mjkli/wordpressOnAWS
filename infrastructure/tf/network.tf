@@ -125,7 +125,7 @@ resource "aws_lb" "app-lb"{
 
 resource "aws_lb_target_group" "app-tg" {
     name = "wp-lb-tg"
-    port = "80"
+    port = "443"
     protocol = "HTTPS"
     vpc_id = aws_vpc.wp-vpc.id
 }

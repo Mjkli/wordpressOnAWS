@@ -3,7 +3,7 @@ resource "aws_cloudfront_distribution" "cf_dist" {
     enabled = true
 
     origin {
-      domain_name = aws_route53_record.wp.fqdn
+      domain_name = aws_lb.app-lb.dns_name
       origin_id = "wp-origin"
       custom_origin_config {
         http_port = 80
