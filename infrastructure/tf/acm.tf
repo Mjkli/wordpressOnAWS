@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "wp-cert" {
-    domain_name = "wp.mjkli.com"
+    domain_name = "mjkli.com"
     validation_method = "DNS"
 
     lifecycle {
@@ -11,5 +11,4 @@ resource "aws_acm_certificate" "wp-cert" {
 resource "aws_acm_certificate_validation" "wp-cert-val" {
     certificate_arn = aws_acm_certificate.wp-cert.arn
     validation_record_fqdns = [ for record in aws_route53_record.wp : record.fqdn]
-
 }
