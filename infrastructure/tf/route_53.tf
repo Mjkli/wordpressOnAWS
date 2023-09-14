@@ -6,7 +6,7 @@ data "aws_route53_zone" "mjkli_zone" {
 resource "aws_route53_record" "wp" {
     zone_id = data.aws_route53_zone.mjkli_zone.zone_id
     name = "wp.${data.aws_route53_zone.mjkli_zone.name}"
-    type = "A"
+    type = "CNAME"
     ttl = "300"
     records = [aws_lb.app-lb.dns_name]
 }
