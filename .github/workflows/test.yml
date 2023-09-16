@@ -20,7 +20,7 @@ jobs:
     ami:
         name: Build AMI Image
         needs: changes
-        if: (needs.changes.outputs.image == 'true')
+        if: (needs.changes.outputs.image == 'image')
         runs-on: ubuntu-latest
         container: mjkli/packer-aws:latest
         env:
