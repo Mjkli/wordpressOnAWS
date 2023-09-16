@@ -38,7 +38,7 @@ define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 
 define('WP_HOME', "https://wp.mjkli.com");
-define('WP_SITEURL',"https://wp.mjkli.com")
+define('WP_SITEURL',"https://wp.mjkli.com");
 
 /**#@+
  * Authentication unique keys and salts.

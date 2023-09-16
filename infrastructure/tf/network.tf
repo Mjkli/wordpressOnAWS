@@ -126,13 +126,13 @@ resource "aws_lb" "app-lb"{
 resource "aws_lb_target_group" "app-tg" {
     name = "wp-lb-tg"
     port = "80"
-    protocol = "HTTPS"
+    protocol = "HTTP"
     vpc_id = aws_vpc.wp-vpc.id
 }
 
 resource "aws_lb_listener" "lb_listener" {
     load_balancer_arn = aws_lb.app-lb.arn
-    port = 443
+    port = 80
     protocol = "HTTPS"
 
     default_action{

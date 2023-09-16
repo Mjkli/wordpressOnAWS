@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "wp-cert" {
-    domain_name = "mjkli.com"
+    domain_name = "wp.mjkli.com"
     validation_method = "DNS"
 
     lifecycle {

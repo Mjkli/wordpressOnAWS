@@ -7,7 +7,7 @@ jobs:
     changes:
       runs-on: ubuntu-latest
       outputs:
-        image: ${{ steps.filters.outputs.image }}
+        image: ${{ steps.filter.outputs.image }}
       steps:
         - uses: actions/checkout@v3
         - uses: dorny/paths-filter@v2
@@ -20,7 +20,6 @@ jobs:
     ami:
         name: Build AMI Image
         needs: changes
-        if: (needs.changes.outputs.image == 'image')
         runs-on: ubuntu-latest
         container: mjkli/packer-aws:latest
         env:
