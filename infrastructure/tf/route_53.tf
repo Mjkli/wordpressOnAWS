@@ -24,6 +24,6 @@ resource "aws_route53_record" "wp" {
     name = "wp.mjkli.com"
     type = "CNAME"
     ttl = "300"
-    records = [aws_lb.app-lb.dns_name]
+    records = [aws_cloudfront_distribution.cf_dist.domain_name]
 
 }

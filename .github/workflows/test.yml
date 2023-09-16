@@ -16,6 +16,7 @@ jobs:
               filters: |
                 image:
                   - 'infrastructure/packer/**'
+                  - 'wp-config/**'
     ami:
         name: Build AMI Image
         needs: changes
