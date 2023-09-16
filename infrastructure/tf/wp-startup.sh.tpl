@@ -24,4 +24,5 @@ fi
 sudo a2ensite wordpress
 sudo a2enmod rewrite
 sudo a2dissite 000-default
+sudo a2enmod ssl
 sudo service apache2 reload
