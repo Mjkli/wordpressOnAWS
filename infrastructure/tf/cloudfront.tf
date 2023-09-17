@@ -17,7 +17,7 @@ resource "aws_cloudfront_distribution" "cf_dist" {
 
     default_cache_behavior {
         allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-        cached_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
+        cached_methods = ["GET", "HEAD", "OPTIONS"]
         target_origin_id = "wp-origin"
         viewer_protocol_policy = "https-only"
         min_ttl = 0
