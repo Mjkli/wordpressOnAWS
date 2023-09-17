@@ -139,5 +139,5 @@ resource "aws_lb_listener" "lb_listener" {
         type = "forward"
         target_group_arn = aws_lb_target_group.app-tg.arn
     }
-    certificate_arn = aws_acm_certificate_validation.wp-cert-val.certificate_arn
+
 }

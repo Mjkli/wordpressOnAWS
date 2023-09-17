@@ -19,7 +19,6 @@ resource "aws_cloudfront_distribution" "cf_dist" {
         allowed_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
         cached_methods = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
         target_origin_id = "wp-origin"
-        origin_request_policy_id = "216adef6-5c7f-47e4-b989-5492eafa07d3"
         viewer_protocol_policy = "https-only"
         min_ttl = 0
         default_ttl = 0
