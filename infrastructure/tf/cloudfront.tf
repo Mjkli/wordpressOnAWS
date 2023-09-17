@@ -4,7 +4,7 @@ resource "aws_cloudfront_distribution" "cf_dist" {
     aliases = [ "wp.mjkli.com" ]
 
     origin {
-      domain_name = aws_lb.app-lb.dns_name
+      domain_name = "wp.mjkli.com"
       origin_id = "wp-origin"
       custom_origin_config {
         http_port = 80
@@ -25,8 +25,11 @@ resource "aws_cloudfront_distribution" "cf_dist" {
         min_ttl = 0
         default_ttl = 0
         max_ttl = 0
-        cookies {
+        forwarded_values {
+          query_string = false
+          cookies {
             forward = "all"
+          }
         }
     }
 
