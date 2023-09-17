@@ -4,7 +4,7 @@ resource "aws_cloudfront_distribution" "cf_dist" {
     aliases = [ "wp.mjkli.com" ]
 
     origin {
-      domain_name = "wp.mjkli.com"
+      domain_name = aws_lb.app-lb.dns_name
       origin_id = "wp-origin"
       custom_origin_config {
         http_port = 80
@@ -34,7 +34,9 @@ resource "aws_cloudfront_distribution" "cf_dist" {
     }
 
     viewer_certificate {
-        cloudfront_default_certificate = true
+        acm_certificate_arn = aws_acm_certificate_validation.wp-cert-val.certificate_arn
+        minimum_protocol_version = "TLSv1"
+        ssl_support_method = "sni-only"
     }
 
     restrictions {

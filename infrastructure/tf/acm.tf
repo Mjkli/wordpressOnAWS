@@ -1,6 +1,8 @@
 resource "aws_acm_certificate" "wp-cert" {
+    provider = aws.virginia
     domain_name = "wp.mjkli.com"
     validation_method = "DNS"
+
 
     lifecycle {
       create_before_destroy = true
