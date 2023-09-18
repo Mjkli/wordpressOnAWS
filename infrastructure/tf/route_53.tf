@@ -22,7 +22,7 @@ resource "aws_route53_record" "wp_cert_record" {
 resource "aws_route53_record" "wp" {
     zone_id = data.aws_route53_zone.mjkli_zone.zone_id
     name = "wp.mjkli.com"
-    type = "A"
+    type = "CNAME"
     ttl = "300"
     records = [aws_cloudfront_distribution.cf_dist.domain_name]
 
