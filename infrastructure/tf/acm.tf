@@ -17,6 +17,7 @@ resource "aws_acm_certificate_validation" "wp-cert-val" {
 }
 
 resource "aws_acm_certificate" "wp-lb-cert" {
+    provider = aws.cali
     domain_name = "wp-lb.mjkli.com"
     validation_method = "DNS"
 

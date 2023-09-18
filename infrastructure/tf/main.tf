@@ -1,4 +1,5 @@
 provider "aws"{
+    alias = "cali"
     region = "us-west-1"
 }
 provider "aws" {
