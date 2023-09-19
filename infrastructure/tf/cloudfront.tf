@@ -1,7 +1,7 @@
 resource "aws_cloudfront_distribution" "cf_dist" {
 
     enabled = true
-    aliases = [ aws_route53_record.wp.fqdn ]
+    aliases = [ "wp.mjkli.com" ]
 
     origin {
       domain_name = aws_route53_record.wp-lb.fqdn
