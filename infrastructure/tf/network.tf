@@ -153,6 +153,21 @@ resource "aws_lb_listener" "https_lb_listener" {
     }
 }
 
+resource "aws_lb_listener_rule" "listener_special_header" {
+    listener_arn = aws_lb_listener.https_lb_listener.arn
+
+    action {
+      type = "forward"
+      target_group_arn = aws_lb_target_group.app-tg.arn
+    }
+    condition {
+      http_header {
+        http_header_name = "X-Custom-Header"
+        values = [ random_string.header_value.result ]
+      }
+    }
+}
+
 resource "aws_lb_listener" "http_lb_listener" {
     load_balancer_arn = aws_lb.app-lb.arn
     port = 80

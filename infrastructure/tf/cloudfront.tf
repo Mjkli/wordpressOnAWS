@@ -1,3 +1,9 @@
+resource "random_string" "header_value" {
+    length = 16
+    special = true
+}
+
+
 resource "aws_cloudfront_distribution" "cf_dist" {
 
     enabled = true
@@ -6,6 +12,11 @@ resource "aws_cloudfront_distribution" "cf_dist" {
     origin {
       domain_name = aws_route53_record.wp-lb.fqdn
       origin_id = "wp-origin"
+      
+      custom_header {
+        name = "X-Custom-Header"
+        value = random_string.header_value.result
+      }
       custom_origin_config {
         http_port = 80
         https_port = 443

@@ -4,7 +4,6 @@ data "aws_ami" "wp-image" {
     name_regex = "wp-image"
 }
 
-
 resource "aws_launch_template" "wp-template" {
     depends_on = [ aws_efs_file_system.wp-fs, aws_db_instance.wp-db ]
     name_prefix = "wp-image"
@@ -14,7 +13,7 @@ resource "aws_launch_template" "wp-template" {
     key_name = "main"
 
     network_interfaces {
-        associate_public_ip_address = true
+        associate_public_ip_address = false
         security_groups = ["${aws_security_group.allow_lb.id}"]
     }
 
