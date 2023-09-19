@@ -85,6 +85,8 @@ define( 'WP_DEBUG', false );
 
 /* Add any custom values between this line and the "stop editing" line. */
 
+define('FS_METHOD', 'direct');
+
 define('FORCE_SSL_ADMIN', true);
 if (strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false)
         $_SERVER['HTTPS']='on';

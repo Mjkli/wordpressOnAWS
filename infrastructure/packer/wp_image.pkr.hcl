@@ -50,7 +50,11 @@ build {
       "sudo mkdir /var/www/html/wordpress",
       "sudo chmod 775 /var/www/html/wordpress",
       "sudo mv /tmp/wp-config/wordpress.conf /etc/apache2/sites-available/wordpress.conf",
-      "sudo mv /tmp/wp-config/wp-config.php /var/www/html"
+      "sudo mv /tmp/wp-config/wp-config.php /var/www/html",
+      "sudo wget https://elasticache-downloads.s3.amazonaws.com/ClusterClient/PHP-7.0/latest-64bit",
+      "sudo tar -zxvf latest-64bit",
+      "sudo cp /tar/artifact/amazon-elasticache-cluster-client.so /opt/bitnami/php/lib/php/extensions/",
+      "sudo echo 'extension=amazon-elasticache-cluster-client.so' >> /opt/bitnami/php/etc/php.ini"
       ]
   }
 }

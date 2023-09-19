@@ -13,7 +13,7 @@ resource "aws_launch_template" "wp-template" {
     key_name = "main"
 
     network_interfaces {
-        associate_public_ip_address = false
+        associate_public_ip_address = true
         security_groups = ["${aws_security_group.allow_lb.id}"]
     }
 
@@ -36,8 +36,8 @@ resource "aws_autoscaling_group" "wp-asg" {
     desired_capacity = 1
     min_size = 1
     max_size = 4
-    vpc_zone_identifier = [aws_subnet.app-sub-1.id,aws_subnet.app-sub-2.id]
-    #vpc_zone_identifier = [aws_subnet.public-sub-1.id,aws_subnet.public-sub-2.id]
+    #vpc_zone_identifier = [aws_subnet.app-sub-1.id,aws_subnet.app-sub-2.id]
+    vpc_zone_identifier = [aws_subnet.public-sub-1.id,aws_subnet.public-sub-2.id]
     target_group_arns = [aws_lb_target_group.app-tg.arn]
 
     launch_template {
