@@ -91,16 +91,9 @@ jobs:
             - name: Wait for infrastructure to apply
               run: sleep 60
 
-            - name: Get cloudfront URL
-              id: cloudfront
-              working-directory: infrastructure/tf
-              run: |
-                eval cf_dns=$(terraform output cloudfront_dns)
-                echo "cf_dns=$cf_dns" >> $GITHUB_OUTPUT
-
             - name: Check if cloudfront url is working
               id: cloud_check
-              run: curl https://${{steps.cloudfront.outputs.cf_dns}}
+              run: curl https://wp.mjkli.com
 
             - name: cloudfront_status
               if: steps.cloud_check.outcome == 'failure'
