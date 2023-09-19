@@ -37,6 +37,7 @@ define( 'DB_CHARSET', 'utf8' );
 /** The database collate type. Don't change this if in doubt. */
 define( 'DB_COLLATE', '' );
 
+
 /**#@+
  * Authentication unique keys and salts.
  *
@@ -84,7 +85,9 @@ define( 'WP_DEBUG', false );
 
 /* Add any custom values between this line and the "stop editing" line. */
 
-
+define('FORCE_SSL_ADMIN', true);
+if (strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false)
+        $_SERVER['HTTPS']='on';
 
 /* That's all, stop editing! Happy publishing. */
 

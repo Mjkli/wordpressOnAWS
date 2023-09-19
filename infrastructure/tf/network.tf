@@ -115,6 +115,16 @@ resource "aws_subnet" "db-sub-2"{
     cidr_block = "10.0.5.0/24"
 }
 
+resource "aws_route_table_association" "db1-asso" {
+    subnet_id = aws_subnet.db-sub-1.id
+    route_table_id = aws_route_table.app-rt-1.id
+}
+
+resource "aws_route_table_association" "db2-asso" {
+    subnet_id = aws_subnet.db-sub-2.id
+    route_table_id = aws_route_table.app-rt-1.id
+}
+
 resource "aws_lb" "app-lb"{
     name = "wp-lb"
     internal = false
@@ -130,13 +140,51 @@ resource "aws_lb_target_group" "app-tg" {
     vpc_id = aws_vpc.wp-vpc.id
 }
 
-resource "aws_lb_listener" "lb_listener" {
+resource "aws_lb_listener" "https_lb_listener" {
+    load_balancer_arn = aws_lb.app-lb.arn
+    port = 443
+    protocol = "HTTPS"
+    ssl_policy = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+    certificate_arn = aws_acm_certificate_validation.wp-lb-cert-val.certificate_arn
+
+    default_action{
+        type = "fixed-response"
+        fixed_response {
+          content_type = "text/plain"
+          message_body = "Not found"
+          status_code = "404"
+        }
+    }
+}
+
+resource "aws_lb_listener_rule" "listener_special_header" {
+    listener_arn = aws_lb_listener.https_lb_listener.arn
+
+    action {
+      type = "forward"
+      target_group_arn = aws_lb_target_group.app-tg.arn
+    }
+    condition {
+      http_header {
+        http_header_name = "X-Custom-Header"
+        values = [ random_string.header_value.result ]
+      }
+    }
+}
+
+resource "aws_lb_listener" "http_lb_listener" {
     load_balancer_arn = aws_lb.app-lb.arn
     port = 80
     protocol = "HTTP"
 
-    default_action{
-        type = "forward"
-        target_group_arn = aws_lb_target_group.app-tg.arn
+    default_action {
+      type = "redirect"
+      redirect {
+        port = "443"
+        protocol = "HTTPS"
+        status_code = "HTTP_301"
+
+      }
     }
+
 }

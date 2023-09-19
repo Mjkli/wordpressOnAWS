@@ -7,7 +7,7 @@ jobs:
     changes:
       runs-on: ubuntu-latest
       outputs:
-        image: ${{ steps.filters.outputs.image }}
+        image: ${{ steps.filter.outputs.image }}
       steps:
         - uses: actions/checkout@v3
         - uses: dorny/paths-filter@v2
@@ -16,10 +16,10 @@ jobs:
               filters: |
                 image:
                   - 'infrastructure/packer/**'
+                  - 'wp-config/**'
     ami:
         name: Build AMI Image
         needs: changes
-        if: (needs.changes.outputs.image == 'true')
         runs-on: ubuntu-latest
         container: mjkli/packer-aws:latest
         env:
@@ -91,16 +91,9 @@ jobs:
             - name: Wait for infrastructure to apply
               run: sleep 60
 
-            - name: Get cloudfront URL
-              id: cloudfront
-              working-directory: infrastructure/tf
-              run: |
-                eval cf_dns=$(terraform output cloudfront_dns)
-                echo "cf_dns=$cf_dns" >> $GITHUB_OUTPUT
-
             - name: Check if cloudfront url is working
               id: cloud_check
-              run: curl https://${{steps.cloudfront.outputs.cf_dns}}
+              run: curl https://wp.mjkli.com
 
             - name: cloudfront_status
               if: steps.cloud_check.outcome == 'failure'
