@@ -134,6 +134,9 @@ resource "aws_lb_listener" "lb_listener" {
     load_balancer_arn = aws_lb.app-lb.arn
     port = 443
     protocol = "HTTPS"
+    ssl_policy = "ELBSecurityPolicy-2016-08"
+    certificate_arn = aws_acm_certificate_validation.wp-lb-cert-val.certificate_arn
+
 
     default_action{
         type = "forward"
