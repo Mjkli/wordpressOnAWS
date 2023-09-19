@@ -41,6 +41,10 @@ jobs:
             - name: Checkout the repo to the runner
               uses: actions/checkout@v3
 
+            - name: Input rds password
+              working-directory: infrastructure/tf
+              run: sed -i "s/replace_me/${{ secrets.rds_password }}/g" wp-startup.sh.tpl
+
             - name: Terraform init
               run: terraform init
               working-directory: infrastructure/tf
@@ -56,7 +60,7 @@ jobs:
 
             - name: Terraform Plan
               id: plan
-              run: terraform plan -input=false
+              run: terraform plan -input=false -var="rds_pass=${{ secrets.rds_password }}"
               working-directory: infrastructure/tf
 
             - name: Terraform plan status
@@ -64,5 +68,5 @@ jobs:
               run: exit 1
 
             - name: Terrafrom apply
-              run: terraform apply -auto-approve -input=false
+              run: terraform apply -var="rds_pass=${{ secrets.rds_password }}" -auto-approve -input=false
               working-directory: infrastructure/tf

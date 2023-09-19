@@ -4,7 +4,6 @@ data "aws_ami" "wp-image" {
     name_regex = "wp-image"
 }
 
-
 resource "aws_launch_template" "wp-template" {
     depends_on = [ aws_efs_file_system.wp-fs, aws_db_instance.wp-db ]
     name_prefix = "wp-image"
@@ -38,6 +37,7 @@ resource "aws_autoscaling_group" "wp-asg" {
     min_size = 1
     max_size = 4
     vpc_zone_identifier = [aws_subnet.app-sub-1.id,aws_subnet.app-sub-2.id]
+    #vpc_zone_identifier = [aws_subnet.public-sub-1.id,aws_subnet.public-sub-2.id]
     target_group_arns = [aws_lb_target_group.app-tg.arn]
 
     launch_template {
