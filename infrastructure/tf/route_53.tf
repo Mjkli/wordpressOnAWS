@@ -47,3 +47,16 @@ resource "aws_route53_record" "wp" {
     }
 
 }
+
+resource "aws_route53_record" "wp-lb" {
+    zone_id = data.aws_route53_zone.mjkli_zone.zone_id
+    name = "wp-lb.mjkli.com"
+    type = "A"
+
+    alias {
+      name = aws_lb.app-lb.dns_name
+      zone_id = aws_lb.app-lb.zone_id
+      evaluate_target_health = true
+    }
+
+}
