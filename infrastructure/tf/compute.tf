@@ -37,8 +37,8 @@ resource "aws_autoscaling_group" "wp-asg" {
     desired_capacity = 1
     min_size = 1
     max_size = 4
-    #vpc_zone_identifier = [aws_subnet.app-sub-1.id,aws_subnet.app-sub-2.id]
-    vpc_zone_identifier = [aws_subnet.public-sub-1.id,aws_subnet.public-sub-2.id]
+    vpc_zone_identifier = [aws_subnet.app-sub-1.id,aws_subnet.app-sub-2.id]
+    #vpc_zone_identifier = [aws_subnet.public-sub-1.id,aws_subnet.public-sub-2.id]
     target_group_arns = [aws_lb_target_group.app-tg.arn]
 
     launch_template {

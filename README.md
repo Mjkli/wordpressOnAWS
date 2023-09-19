@@ -7,3 +7,10 @@ This project will not only create the environment to configure wordpress, but it
 ![Alt text](https://github.com/Mjkli/wordpressOnAWS/blob/master/diagram.png)
 
 Diagram referenced from: https://docs.aws.amazon.com/whitepapers/latest/best-practices-wordpress/reference-architecture.html
+
+## Issues along the way
+Setting up HTTPS proved to be a challenge as I needed to re-configure multiple parts of the infrastructure to handle the different style request.
+    1 - wordpress configuration needed to be adjusted  - https://aws.amazon.com/blogs/opensource/enabling-https-offloading-for-wordpress-blog-posts-in-aws-govcloud/
+
+    2 - Certificates needed to be made - along with purchasing a domain name.
+    3 - routing http requests to the Https protocol.

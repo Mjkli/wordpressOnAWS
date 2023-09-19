@@ -38,9 +38,9 @@ jobs:
             run: packer validate .
             working-directory: infrastructure/packer
 
-          # - name: packer build
-          #   run: packer build wp_image.pkr.hcl
-          #   working-directory: infrastructure/packer
+          - name: packer build
+            run: packer build wp_image.pkr.hcl
+            working-directory: infrastructure/packer
 
     infra:
         needs: ami
