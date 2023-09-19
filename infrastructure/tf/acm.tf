@@ -30,5 +30,5 @@ resource "aws_acm_certificate" "wp-lb-cert" {
 resource "aws_acm_certificate_validation" "wp-lb-cert-val" {
     provider = aws.cali
     certificate_arn = aws_acm_certificate.wp-lb-cert.arn
-    validation_record_fqdns = [ for records in aws_route53_records.wp_lb_cert_record : records.fqdn]
+    validation_record_fqdns = [ for records in aws_route53_record.wp_lb_cert_record : records.fqdn]
 }

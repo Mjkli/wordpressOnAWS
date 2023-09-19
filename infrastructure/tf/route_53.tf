@@ -21,10 +21,10 @@ resource "aws_route53_record" "wp_cert_record" {
 
 resource "aws_route53_record" "wp_lb_cert_record" {
     for_each = {
-        for dvo in aws_acm_certificate.wp-cert.domain_validation_options : dvo.domain_name => {
-            name   = dvo.resource_record_name
-            record = dvo.resource_record_value
-            type   = dvo.resource_record_type
+        for dvo2 in aws_acm_certificate.wp-cert.domain_validation_options : dvo2.domain_name => {
+            name   = dvo2.resource_record_name
+            record = dvo2.resource_record_value
+            type   = dvo2.resource_record_type
         }
   }
 
