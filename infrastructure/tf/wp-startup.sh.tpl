@@ -19,8 +19,9 @@ else
   sudo sed -i "s/password_here/replace_me/g" /var/www/html/wp-config.php
   sudo sed -i "s/localhost/${rds_server}/g" /var/www/html/wp-config.php
   sudo cp /var/www/html/wp-config.php /var/www/html/wordpress/wordpress
-  sudo cd /var/www/html/wordpress
-  sudo chown -R www-data wordpress/
+  sudo unzip /var/www/html/w3-total-cache.zip -d /var/www/html/wordpress/wordpress/plugins/w3-total-cache
+  sudo mkdir /var/www/html/wordpress/wordpress/wp-content/upgrade
+  sudo chown -R www-data /var/www/html/wordpress/wordpress/
 fi
 
 sudo a2ensite wordpress

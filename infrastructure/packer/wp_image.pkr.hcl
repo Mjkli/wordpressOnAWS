@@ -46,15 +46,12 @@ build {
       "sleep 30",
       "sudo apt-get update",
       "sudo apt-get upgrade -y",
-      "sudo apt-get install nfs-common apache2 mysql-client ghostscript libapache2-mod-php mysql-server php php-bcmath php-curl php-imagick php-intl php-json php-mbstring php-mysql php-xml php-zip -y",
+      "sudo apt-get install zip nfs-common apache2 mysql-client ghostscript libapache2-mod-php mysql-server php php-bcmath php-curl php-imagick php-intl php-json php-mbstring php-mysql php-xml php-zip -y",
       "sudo mkdir /var/www/html/wordpress",
       "sudo chmod 775 /var/www/html/wordpress",
       "sudo mv /tmp/wp-config/wordpress.conf /etc/apache2/sites-available/wordpress.conf",
       "sudo mv /tmp/wp-config/wp-config.php /var/www/html",
-      "sudo wget https://elasticache-downloads.s3.amazonaws.com/ClusterClient/PHP-7.0/latest-64bit",
-      "sudo tar -zxvf latest-64bit",
-      "sudo cp /tar/artifact/amazon-elasticache-cluster-client.so /opt/bitnami/php/lib/php/extensions/",
-      "sudo echo 'extension=amazon-elasticache-cluster-client.so' >> /opt/bitnami/php/etc/php.ini"
+      "sudo mv /tmp/wp-config/w3-total-cache.zip /var/www/html"
       ]
   }
 }
