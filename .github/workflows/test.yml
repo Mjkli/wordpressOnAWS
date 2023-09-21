@@ -77,7 +77,7 @@ jobs:
 
             - name: Terraform Plan
               id: plan
-              run: terraform plan -input=false -var="rds_pass=${{ secrets.rds_password }}"
+              run: terraform plan -input=false -var="rds_pass=${{ secrets.rds_password }}" -var="domain=mjkli.com"
               working-directory: infrastructure/tf
 
             - name: Terraform plan status
@@ -85,7 +85,7 @@ jobs:
               run: exit 1
 
             - name: Terrafrom apply
-              run: terraform apply -var="rds_pass=${{ secrets.rds_password }}" -auto-approve -input=false
+              run: terraform apply -var="rds_pass=${{ secrets.rds_password }}" -var="domain=mjkli.com" -auto-approve -input=false
               working-directory: infrastructure/tf
 
             - name: Wait for infrastructure to apply

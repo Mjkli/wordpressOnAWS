@@ -1,5 +1,5 @@
 data "aws_route53_zone" "mjkli_zone" {
-    name = "mjkli.com"
+    name = "${var.domain}"
     private_zone = false
 }
 
@@ -37,7 +37,7 @@ resource "aws_route53_record" "wp_lb_cert_record" {
 
 resource "aws_route53_record" "wp" {
     zone_id = data.aws_route53_zone.mjkli_zone.zone_id
-    name = "wp.mjkli.com"
+    name = "wp.${var.domain}"
     type = "A"
 
     alias {
@@ -50,7 +50,7 @@ resource "aws_route53_record" "wp" {
 
 resource "aws_route53_record" "wp-lb" {
     zone_id = data.aws_route53_zone.mjkli_zone.zone_id
-    name = "wp-lb.mjkli.com"
+    name = "wp-lb.${var.domain}"
     type = "A"
 
     alias {
