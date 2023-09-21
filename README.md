@@ -9,6 +9,17 @@ This project will not only create the environment to configure wordpress, but it
 
 Diagram referenced from: https://docs.aws.amazon.com/whitepapers/latest/best-practices-wordpress/reference-architecture.html
 
+## How to Use
+First: Make sure that you have these variables in your github action secrets. If you plan on using this project locally. Make sure you have your aws cli credentials connected, and you remove the "backend" block in infrastructure/tf/main.tf
+
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+RDS_PASSWORD
+
+Second: Make sure you have access to the domain you want to host on aws. This project will use a custom domain to host the infrastructure in https.
+
+Three: To deploy infrastructure you will need to either push to your private repo with the variables set, (RDS and Domain), or make sure you run the packer build then terraform build. (The commands are spelled out in the github actions yml.)
+
 ## Issues along the way
 
 ### Installing wordpress on EFS.
