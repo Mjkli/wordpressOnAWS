@@ -22,4 +22,4 @@ Setting up HTTPS proved to be a challenge as I needed to re-configure multiple p
     4 - Identifying the path of the requests. ( this requires adding a custom header to cloudfront and only allowing requests that have that header reach the ALB. Otherwise users can access the ALB without going through Cloudfront)
 
 Setting up Elasti-Cache
-    - This becomes an issue because it requires manual setup to do. Although not 
+    - This becomes an issue because it requires manual setup to do.
