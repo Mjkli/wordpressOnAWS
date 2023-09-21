@@ -11,27 +11,33 @@ Diagram referenced from: https://docs.aws.amazon.com/whitepapers/latest/best-pra
 
 ## Issues along the way
 
-Installing wordpress on EFS.
-    - This proved to be difficult because you cannot access an EFS share before it is mounted to an instance. To solve this. I used the User data portion of an ec2 instance startup to mount the efs share and to check if anything was there. If not then it will download and install the wordpress files there.
+### Installing wordpress on EFS.
+    This proved to be difficult because you cannot access an EFS share before it is mounted to an instance. To solve this. I used the User data portion of an ec2 instance startup to mount the efs share and to check if anything was there. If not then it will download and install the wordpress files there.
 
-Setting up HTTPS proved to be a challenge as I needed to re-configure multiple parts of the infrastructure to handle the different style request.
+### Setting up HTTPS proved to be a challenge as I needed to re-configure multiple parts of the infrastructure to handle the different style request.
 
     1. wordpress configuration needed to be adjusted  - https://aws.amazon.com/blogs/opensource/enabling-https-offloading-for-wordpress-blog-posts-in-aws-govcloud/
     2. Certificates needed to be made - along with purchasing a domain name.
     3. routing http requests to the Https protocol.
     4. Identifying the path of the requests. ( this requires adding a custom header to cloudfront and only allowing requests that have that header reach the ALB. Otherwise users can access the ALB without going through Cloudfront)
 
-Setting up Elasti-Cache
-    This becomes an issue because it requires manual setup to do.
-    to accomplish this we have to manually install the W3 Total Cache
+### Setting up Elasti-Cache
+This becomes an issue because it requires manual setup to do. To accomplish this we have to manually install the W3 Total Cache
 ![Alt text](https://github.com/Mjkli/wordpressOnAWS/blob/master/documentation/Installing_cache_app_w3.PNG)
 
-    After the plugin is installed we need to configure the plugin to connect to the memcache (elasticache) database
-    Enable Memcached in the database cache section
+After the plugin is installed we need to configure the plugin to connect to the memcache (elasticache) database
+Enable Memcached in the database cache section
+
 ![Alt text](https://github.com/Mjkli/wordpressOnAWS/blob/master/documentation/w3_settings.png)
 
-    Select Advanced Settings
-    Configure the following
+Select Advanced Settings
+Configure the following
+
 ![Alt text](https://github.com/Mjkli/wordpressOnAWS/blob/master/documentation/w3_advanced_settings.png)
 
-    Locate the Memcached hostname:port / IP: port settings given by the terraform output.
+Locate the Memcached hostname:port / IP: port settings given by the terraform output.
+
+### Configuring Autoscaling
+Needed to test the autoscaling of and found I had not added autoscaling policies. Once added if the current wp image CPU hits 60% load another instance will spin up and start loadbalancing the traffic.
+I tested the network traffic using siege, an HTTP/S load tester and benchmarking utility.
+
