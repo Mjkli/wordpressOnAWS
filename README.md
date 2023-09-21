@@ -41,3 +41,7 @@ Locate the Memcached hostname:port / IP: port settings given by the terraform ou
 Needed to test the autoscaling of and found I had not added autoscaling policies. Once added if the current wp image CPU hits 60% load another instance will spin up and start loadbalancing the traffic.
 I tested the network traffic using siege, an HTTP/S load tester and benchmarking utility.
 
+## Things I would fix If I continued working on this project.
+
+1 - When a new instance comes up it defaults to the apache default site then comes up. this inital start up is not ideal.
+2 - Defining read replicas so that database access will be more streamed line. (there is a plugin we can use)

@@ -1,6 +1,6 @@
 resource "aws_acm_certificate" "wp-cert" {
     provider = aws.virginia
-    domain_name = "wp.mjkli.com"
+    domain_name = "wp.${var.domain}"
     validation_method = "DNS"
 
 
@@ -18,7 +18,7 @@ resource "aws_acm_certificate_validation" "wp-cert-val" {
 
 resource "aws_acm_certificate" "wp-lb-cert" {
     provider = aws.cali
-    domain_name = "wp-lb.mjkli.com"
+    domain_name = "wp-lb.${var.domain}"
     validation_method = "DNS"
 
 
