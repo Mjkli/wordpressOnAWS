@@ -88,8 +88,37 @@ resource "aws_security_group" "allow_mysql" {
         cidr_blocks = ["${aws_vpc.wp-vpc.cidr_block}"]
     }
 
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
     tags = {
         Name = "allow_mysql"
         project = "wp_on_AWS"
     }
+}
+
+resource "aws_security_group" "allow_memcache" {
+    name = "allow_memcache_from_vpc"
+    description = "allows memcache access from only the vpc"
+    vpc_id = aws_vpc.wp-vpc.id
+
+    ingress {
+        description = "memcache from vpc"
+        from_port = 11211
+        to_port = 11211
+        protocol = "TCP"
+        cidr_blocks = ["${aws_vpc.wp-vpc.cidr_block}"]
+    }
+
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
 }
