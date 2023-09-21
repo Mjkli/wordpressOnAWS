@@ -1,3 +1,3 @@
-output "cloudfront_dns" {
-    value = aws_cloudfront_distribution.cf_dist.domain_name
+output "memcache_endpoint_nodes" {
+    value = aws_elasticache_cluster.wp-cache.cache_nodes
 }
