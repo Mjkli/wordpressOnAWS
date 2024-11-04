@@ -23,7 +23,7 @@ Three: To deploy infrastructure you will need to either push to your private rep
 ## Issues along the way
 
 ### Installing wordpress on EFS.
-    This proved to be difficult because you cannot access an EFS share before it is mounted to an instance. To solve this. I used the User data portion of an ec2 instance startup to mount the efs share and to check if anything was there. If not then it will download and install the wordpress files there.
+This proved to be difficult because you cannot access an EFS share before it is mounted to an instance. To solve this. I used the User data portion of an ec2 instance startup to mount the efs share and to check if anything was there. If not then it will download and install the wordpress files there.
 
 ### Setting up HTTPS proved to be a challenge as I needed to re-configure multiple parts of the infrastructure to handle the different style request.
 
